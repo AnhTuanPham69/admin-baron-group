@@ -1,16 +1,27 @@
-import React from "react";
+import React, {useState} from "react";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import callAPI from '../../api/api';
 
 import './style.css'
 
 export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const history = useHistory();
+  const [status, setStatus] = useState();
 
   const onSubmit = data => {
     console.log(data);
-    callAPI('post', '/login', data);
+    callAPI('post', '/admin', data).then((res)=>{
+      console.log(`status: ${res.status}`);
+      setStatus(res.status);
+      sessionStorage.setItem('__token__', JSON.stringify(res.data.token));
+      history.push('/dashboard');
+    }).catch((err)=>{
+      setStatus(401);
+    });
+    
+
   }
   return (
     <div>
@@ -44,10 +55,12 @@ export default function Login() {
                 />
                 {errors.password && <span className="text-danger">This field is required</span>}
               </div>
-
+              <div>{
+                status === 401 
+                && <span className="text-danger">Username or Password is wrong! <br/></span>
+              }</div>
               <div className="form-group" id="choice">
-              <div> <span className="text-danger"> Sai mật khẩu</span></div>
-                <NavLink to="/forgot_password" >Forgot password?</NavLink>
+               <NavLink to="/forgot_password" >Forgot password?</NavLink>
               </div>
               
               <button type="submit" className="btn btn-login btn-lg btn-block" >

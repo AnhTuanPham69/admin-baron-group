@@ -2,14 +2,14 @@ import axios from "axios";
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
 const  token = sessionStorage.getItem('__token__');
-export default function callAPI (method, endpoint, body){
-    axios({
+export default async function callAPI (method, endpoint, body){
+   return axios({
         method: method,
         url: endpoint,
         data: body,
         headers: { Authorization: `Bearer ${token}`,
                    Accept: 'application/json'}
-      }).then((res) => res.data.data).catch((err) => false);;
+      });
  }
 
 //  export default callAPIVerify = (method, endpoint) =>{

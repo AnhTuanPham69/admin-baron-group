@@ -27,7 +27,7 @@ export default function ForgotPassword() {
                   placeholder="Enter email"
                   {...register("email", { required: true })}
                 />
-                {errors.username && <span className="text-danger">This field is required</span>}
+                {errors.email && <span className="text-danger">This field is required</span>}
               </div>
               <div className="form-group" id="choice">
               <div> <span className="text-danger"> Error: Sai email</span></div>

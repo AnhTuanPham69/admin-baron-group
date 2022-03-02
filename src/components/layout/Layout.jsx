@@ -12,6 +12,10 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import ThemeAction from '../../redux/actions/ThemeAction'
 
+import loggedIn from "../../auth/loggedIn";
+import Login from '../../pages/authentication/Login'
+
+
 
 const Layout = () => {
 
@@ -28,7 +32,10 @@ const Layout = () => {
 
         dispatch(ThemeAction.setColor(colorClass))
     }, [dispatch])
-
+    
+    if(!loggedIn()){
+        return <Login />
+    }
     return (
         <BrowserRouter>
             <Route render={(props) => (

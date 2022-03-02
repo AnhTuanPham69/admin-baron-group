@@ -10,12 +10,12 @@ import ThemeMenu from '../thememenu/ThemeMenu'
 
 import notifications from '../../assets/JsonData/notification.json'
 
-import user_image from '../../assets/images/tuat.png'
+import user_image from '../../assets/images/tuan.jpg'
 
 import user_menu from '../../assets/JsonData/user_menus.json'
 
 const curr_user = {
-    display_name: 'Tuat Tran',
+    display_name: 'Phạm Anh Tuấn',
     image: user_image
 }
 
@@ -38,7 +38,7 @@ const renderUserToggle = (user) => (
 )
 
 const renderUserMenu =(item, index) => (
-    <Link to='/' key={index}>
+    <Link to={'/'+item.link} key={index}>
         <div className="notification-item">
             <i className={item.icon}></i>
             <span>{item.content}</span>
