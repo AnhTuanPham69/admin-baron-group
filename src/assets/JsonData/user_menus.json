@@ -2,21 +2,21 @@
     {
         "icon": "bx bx-user",
         "content": "Profile",
-        "link": "/logout"
+        "link": ""
     },
     {
         "icon": "bx bx-wallet-alt",
         "content": "My Wallet",
-        "link": "/logout"
+        "link": ""
     },
     {
         "icon": "bx bx-cog",
         "content": "Settings",
-        "link": "/logout"
+        "link": ""
     },
     {
         "icon": "bx bx-log-out-circle bx-rotate-180",
         "content": "Logout",
-        "link": "/logout"
+        "link": "login"
     }
 ]

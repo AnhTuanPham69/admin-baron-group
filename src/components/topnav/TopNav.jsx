@@ -2,7 +2,7 @@ import React from 'react'
 
 import './topnav.css'
 
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import Dropdown from '../dropdown/Dropdown'
 
@@ -13,6 +13,7 @@ import notifications from '../../assets/JsonData/notification.json'
 import user_image from '../../assets/images/tuan.jpg'
 
 import user_menu from '../../assets/JsonData/user_menus.json'
+
 
 const curr_user = {
     display_name: 'Phạm Anh Tuấn',
@@ -38,12 +39,12 @@ const renderUserToggle = (user) => (
 )
 
 const renderUserMenu =(item, index) => (
-    <Link to={'/'+item.link} key={index}>
+    <NavLink to={'/'+ item.link} key={index}>
         <div className="notification-item">
             <i className={item.icon}></i>
             <span>{item.content}</span>
         </div>
-    </Link>
+    </NavLink>
 )
 
 const Topnav = () => {
@@ -68,7 +69,7 @@ const Topnav = () => {
                         badge='12'
                         contentData={notifications}
                         renderItems={(item, index) => renderNotificationItem(item, index)}
-                        renderFooter={() => <Link to='/'>View All</Link>}
+                        renderFooter={() => <NavLink to='/'>View All</NavLink>}
                     />
                     {/* dropdown here */}
                 </div>

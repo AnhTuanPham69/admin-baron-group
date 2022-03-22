@@ -8,7 +8,6 @@ import ForgotPassword from "../pages/authentication/ForgotPassword";
 import Login from "../pages/authentication/Login";
 import loggedIn from "./loggedIn";
 
-
 const Auth = () => {
   return (
     <BrowserRouter>

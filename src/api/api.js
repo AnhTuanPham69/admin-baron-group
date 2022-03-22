@@ -1,9 +1,9 @@
 import axios from "axios";  
+// axios.defaults.baseURL = 'https://barongroup.herokuapp.com/api';
 axios.defaults.baseURL = 'http://localhost:5000/api';
-
-const  token = sessionStorage.getItem('__token__');
 export default async function callAPI (method, endpoint, body){
-   return axios({
+  const  token = JSON.parse(sessionStorage.getItem('__token__'));
+   return await axios({
         method: method,
         url: endpoint,
         data: body,
@@ -11,12 +11,3 @@ export default async function callAPI (method, endpoint, body){
                    Accept: 'application/json'}
       });
  }
-
-//  export default callAPIVerify = (method, endpoint) =>{
-//     axios({
-//         method: method,
-//         url:  endpoint,
-//         data: { res },
-//         headers: { Authorization: `Bearer ${token}` }
-//       });
-//  }

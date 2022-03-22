@@ -1,7 +1,12 @@
 import React, {useRef} from 'react'
+import { NavLink } from 'react-router-dom'
 
 import './dropdown.css'
 
+const logout = () => {
+    sessionStorage.removeItem('__token__');
+    window.location.reload();
+}
 const clickOutsideRef = (content_ref, toggle_ref) => {
     document.addEventListener('mousedown', (e) => {
         // user click toggle
@@ -38,7 +43,14 @@ const Dropdown = props => {
             </button>
             <div ref={dropdown_content_el} className="dropdown__content">
                 {
-                    props.contentData && props.renderItems ? props.contentData.map((item, index) => props.renderItems(item, index)) : ''
+                    // props.contentData && props.renderItems ? props.contentData.map((item, index) => props.renderItems(item, index)) : ''
+                    <NavLink to='/login' onClick={()=>logout()}>
+                    <div className="notification-item">
+                        <i className="bx bx-log-out-circle bx-rotate-180"></i>
+                        <span>Logout</span>
+                    </div>
+                    </NavLink>
+        
                 }
                 {
                     props.renderFooter ? (

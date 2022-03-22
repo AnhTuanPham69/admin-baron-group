@@ -1,25 +1,17 @@
-import React from 'react'
+import React from "react";
 
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch } from "react-router-dom";
 
-import Dashboard from '../pages/Dashboard'
-import Customers from '../pages/Customers'
-
-import loggedIn from "../auth/loggedIn";
-import Login from '../pages/authentication/Login';
-
+import Dashboard from "../pages/Dashboard";
+import Customers from "../pages/Customers";
 
 const Routes = () => {
-    if(loggedIn()){
-        return (
-            <Switch>
-                <Route path='/dashboard' exact component={Dashboard}/>
-                <Route path='/customers' component={Customers}/>
-            </Switch>
-        )
-    }
+  return (
+    <Switch>
+      <Route path="/dashboard" exact component={Dashboard} />
+      <Route path="/customers" component={Customers} />
+    </Switch>
+  );
+};
 
-    return <Login />
-}
-
-export default Routes
+export default Routes;

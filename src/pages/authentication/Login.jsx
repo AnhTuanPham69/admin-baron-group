@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useForm } from "react-hook-form";
 import { NavLink, useHistory } from "react-router-dom";
 import callAPI from '../../api/api';
@@ -9,19 +9,25 @@ export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const history = useHistory();
   const [status, setStatus] = useState();
+  const [isLoad, setLoad] = useState(false);
+
+ 
+  useEffect(() => {
+    sessionStorage.removeItem('__token__');
+  }, []);
 
   const onSubmit = data => {
-    console.log(data);
+    setLoad(true);
     callAPI('post', '/admin', data).then((res)=>{
       console.log(`status: ${res.status}`);
+      setLoad(false);
       setStatus(res.status);
       sessionStorage.setItem('__token__', JSON.stringify(res.data.token));
       history.push('/dashboard');
     }).catch((err)=>{
+      setLoad(false);
       setStatus(401);
     });
-    
-
   }
   return (
     <div>
@@ -63,9 +69,13 @@ export default function Login() {
                <NavLink to="/forgot_password" >Forgot password?</NavLink>
               </div>
               
-              <button type="submit" className="btn btn-login btn-lg btn-block" >
+             {!isLoad
+             ?<button type="submit" className="btn btn-login btn-lg btn-block" >
                 Sign in
               </button>
+              :<button className="btn btn-login btn-lg btn-block" >
+              Loading ...
+            </button>} 
             </form>
           </div>
         </div>
