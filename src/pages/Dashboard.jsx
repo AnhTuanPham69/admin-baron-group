@@ -12,7 +12,7 @@ import Table from "../components/table/Table";
 
 import Badge from "../components/badge/Badge";
 
-import statusCards from "../assets/JsonData/status-card-data.json";
+// import statusCards from "../assets/JsonData/status-card-data.json";
 import callAPI from "../api/api";
 
 
@@ -20,13 +20,21 @@ import callAPI from "../api/api";
 const chartOptions = {
   series: [
     {
-      name: "Online Customers",
-      data: [40, 70, 20, 90, 36, 80, 30, 91, 60],
+      name: "New Post",
+      data: [],
     },
     {
-      name: "Store Customers",
-      data: [40, 30, 70, 80, 40, 16, 40, 20, 51, 10],
+      name: "Like",
+      data: [],
     },
+    {
+      name: "Comment",
+      data: [],
+    },
+    {
+      name: "Book",
+      data: [],
+    }
   ],
   options: {
     color: ["#6ab04c", "#2980b9"],
@@ -50,6 +58,9 @@ const chartOptions = {
         "Jul",
         "Aug",
         "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
       ],
     },
     legend: {
@@ -61,36 +72,6 @@ const chartOptions = {
   },
 };
 
-const topCustomers = {
-  head: ["user", "total orders", "total spending"],
-  body: [
-    {
-      username: "john doe",
-      order: "490",
-      price: "$15,870",
-    },
-    {
-      username: "frank iva",
-      order: "250",
-      price: "$12,251",
-    },
-    {
-      username: "anthony baker",
-      order: "120",
-      price: "$10,840",
-    },
-    {
-      username: "frank iva",
-      order: "110",
-      price: "$9,251",
-    },
-    {
-      username: "anthony baker",
-      order: "80",
-      price: "$8,840",
-    },
-  ],
-};
 
 const renderCusomerHead = (item, index) => <th key={index}>{item}</th>;
 
@@ -167,56 +148,102 @@ const renderOrderBody = (item, index) => (
 const Dashboard = () => {
   const themeReducer = useSelector((state) => state.ThemeReducer.mode);
     const [listUser, setListUser] = useState();
-    const [lengthUser, setLengthUser] = useState();
-    // const [listLike, setListLike] = useState();
+    const [listTutor, setlistTutor] = useState();
+    const [listLike, setListLike] = useState();
     const [listPost, setListPost] = useState();
-    // const [listComment, setListComment] = useState();
+    const [listComment, setListComment] = useState();
+    const [listBook, setlistBook] = useState();
+    const [dataChart, setDataChart] = useState();
 
     useEffect(() => {
 
-     getListUser();
-     getListPost()
-               
+      getData();
+      getDataChart();
+      dataChart && dataChart.map((data)=>{
+        // console.log("Abc: "+data.month);
+        chartOptions.series[0].data = chartOptions.series[0].data.concat(data.quantityPost);
+        chartOptions.series[1].data = chartOptions.series[1].data.concat(data.quantityLike);
+        chartOptions.series[2].data = chartOptions.series[2].data.concat(data.quantityComment);
+        chartOptions.series[3].data = chartOptions.series[3].data.concat(data.quantityBook);
+      })
     }, []);
 
-     async function getListUser(){
-        await callAPI('get', '/user/listUser').then((res)=>{
-            console.log("list user: " + res.data.message);
-            setListUser(res.data.list_user);
-            setLengthUser(res.data.list_user.length);
-            // return res.data.list_user;
+     async function getData(){
+        await callAPI('get', '/analysis/overview').then((res)=>{
+            setListUser(res.data.user.data);
+            setListPost(res.data.post.data);
+            setListLike(res.data.like.data);
+            setListComment(res.data.comment.data);
+            setlistTutor(res.data.tutor.data);
+            setlistBook(res.data.book.data);
         }).catch(err => console.log(err));
     }
 
-    async function getListPost(){
-        await callAPI('get', '/post/listQuestion').then((res)=>{
-            console.log("list post: " + res.data.message);
-            setListPost(res.data.listPost);
-            // setListPost(res.data.list_user.length);
-            // return res.data.list_user;
-        }).catch(err => console.log(err));
-    }
+    async function getDataChart(){
+      await callAPI('get', '/analysis/chart').then((res)=>{
+          setDataChart(res.data.analysis);
+          res.data.analysis.map((data)=>{
+            // console.log("Abc: "+data.month);
+            chartOptions.series[0].data = chartOptions.series[0].data.concat(data.quantityPost);
+            chartOptions.series[1].data = chartOptions.series[1].data.concat(data.quantityLike);
+          })
+          console.log("Post: "+chartOptions.series[0].data);
+          console.log("Like: "+chartOptions.series[1].data);
+      }).catch(err => console.log(err));
+  }
+    
+    const topCustomers = {
+      head: ["user", "avg star", "total vote"],
+      body: [
+        {
+          username: "john doe",
+          order: "490",
+          price: "$15,870",
+        },
+        {
+          username: "frank iva",
+          order: "250",
+          price: "$12,251",
+        },
+        {
+          username: "anthony baker",
+          order: "120",
+          price: "$10,840",
+        },
+        {
+          username: "frank iva",
+          order: "110",
+          price: "$9,251",
+        },
+        {
+          username: "anthony baker",
+          order: "80",
+          price: "$8,840",
+        },
+      ],
+    };
 
   return (
     <div>
       <h2 className="page-header">Dashboard</h2>
       <div className="row">
+
         <div className="col-6">
           <div className="row">
-            {/* {statusCards.map((item, index) => (
-              <div className="col-6" key={index}>
-                <StatusCard
-                  icon={item.icon}
-                  count={item.count}
-                  title={item.title}
-                />
-              </div>
-            ))} */}
+            
             <div className="col-6">
               <StatusCard
                 icon="bx bx-user-circle"
                 count={listUser ? listUser.length : "Loading..."}
                 title="Total User"
+              />
+            </div>
+
+            <div className="col-6">
+              <StatusCard
+                icon="bx bx-user-voice"
+                count={listTutor ? listTutor.length : "Loading..."}
+                title="Total Tutor"
               />
             </div>
 
@@ -231,7 +258,7 @@ const Dashboard = () => {
             <div className="col-6">
               <StatusCard
                 icon="bx bx-comment"
-                count="3"
+                count={listComment ? listComment.length : "Loading..."}
                 title="Total Comment"
               />
             </div>
@@ -240,14 +267,41 @@ const Dashboard = () => {
             <div className="col-6">
               <StatusCard
                 icon="bx bx-like"
-                count="3"
+                count={listLike ? listLike.length : "Loading..."}
                 title="Total Like"
+              />
+            </div>
+
+            <div className="col-6">
+              <StatusCard
+                icon="bx bx-book"
+                count={listBook ? listBook.length : "Loading..."}
+                title="Total Book"
               />
             </div>
 
           </div>
         </div>
+
         <div className="col-6">
+          <div className="card">
+            <div className="card__header">
+              <h3>users with contributions</h3>
+            </div>
+            <div className="card__body">
+              <Table
+                headData={topCustomers.head}
+                renderHead={(item, index) => renderCusomerHead(item, index)}
+                bodyData={topCustomers.body}
+                renderBody={(item, index) => renderCusomerBody(item, index)}
+              />
+            </div>
+            <div className="card__footer">
+              <Link to="/">view all</Link>
+            </div>
+          </div>
+        </div>
+        <div className="col-12">
           <div className="card full-height">
             {/* chart */}
             <Chart
@@ -264,32 +318,14 @@ const Dashboard = () => {
               }
               series={chartOptions.series}
               type="line"
-              height="100%"
+              height="200%"
             />
           </div>
         </div>
-        <div className="col-4">
+        <div className="col-12">
           <div className="card">
             <div className="card__header">
-              <h3>top customers</h3>
-            </div>
-            <div className="card__body">
-              <Table
-                headData={topCustomers.head}
-                renderHead={(item, index) => renderCusomerHead(item, index)}
-                bodyData={topCustomers.body}
-                renderBody={(item, index) => renderCusomerBody(item, index)}
-              />
-            </div>
-            <div className="card__footer">
-              <Link to="/">view all</Link>
-            </div>
-          </div>
-        </div>
-        <div className="col-8">
-          <div className="card">
-            <div className="card__header">
-              <h3>latest orders</h3>
+              <h3>Requirements to become a tutor</h3>
             </div>
             <div className="card__body">
               <Table
