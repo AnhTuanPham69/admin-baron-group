@@ -17,6 +17,9 @@ const Auth = () => {
           ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
         </Route>
         <Route path="/dashboard" component={Layout} />
+        <Route path="/customers" component={Layout} />
+        <Route path="/tutors" component={Layout} />
+        <Route path="/settings" component={Layout} />
         <Route path="/forgot_password" component={ForgotPassword} />
         <Route path="/login" component={Login} />
       </Switch>

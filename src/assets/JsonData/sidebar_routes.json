@@ -10,38 +10,16 @@
         "icon": "bx bx-user-pin"
     },
     {
-        "display_name": "Products",
-        "route": "/products",
-        "icon": "bx bx-package"
-    },
-    {
-        "display_name": "Orders",
-        "route": "/orders",
-        "icon": "bx bx-cart"
-    },
-    {
-        "display_name": "Analytics",
-        "route": "/analytics",
-        "icon": "bx bx-bar-chart-alt"
-    },
-    {
-        "display_name": "categories",
-        "route": "/categories",
-        "icon": "bx bx-list-ol"
-    },
-    {
-        "display_name": "discount",
-        "route": "/discount",
-        "icon": "bx bx-gift"
-    },
-    {
-        "display_name": "inventory",
-        "route": "/inventory",
-        "icon": "bx bx-store-alt"
+        "display_name": "Tutors",
+        "route": "/tutors",
+        "icon": "bx bx-user-pin"
     },
     {
         "display_name": "settings",
         "route": "/settings",
         "icon": "bx bx-cog"
     }
+    
 ]
+
+ 
