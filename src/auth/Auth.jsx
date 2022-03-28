@@ -12,16 +12,16 @@ const Auth = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
-          {loggedIn()
-          ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
-        </Route>
-        <Route path="/dashboard" component={Layout} />
+       <Route path="/login" component={Login} />
+       <Route path="/dashboard" component={Layout} />
         <Route path="/customers" component={Layout} />
         <Route path="/tutors" component={Layout} />
         <Route path="/settings" component={Layout} />
         <Route path="/forgot_password" component={ForgotPassword} />
-        <Route path="/login" component={Login} />
+        <Route exact path="/">
+          {loggedIn()
+          ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
+        </Route>
       </Switch>
     </BrowserRouter>
   );

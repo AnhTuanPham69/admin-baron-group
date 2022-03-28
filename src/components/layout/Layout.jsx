@@ -14,12 +14,15 @@ import ThemeAction from '../../redux/actions/ThemeAction'
 
 import loggedIn from "../../auth/loggedIn";
 import Login from '../../pages/authentication/Login'
+import { useHistory } from 'react-router-dom'
 
 
 
 const Layout = () => {
 
     const themeReducer = useSelector(state => state.ThemeReducer)
+
+    const history = useHistory();
 
     const dispatch = useDispatch()
 
@@ -34,6 +37,7 @@ const Layout = () => {
     }, [dispatch])
     
     if(!loggedIn()){
+        history.push("/");
         return <Login />
     }
     return (
