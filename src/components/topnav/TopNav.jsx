@@ -8,7 +8,7 @@ import Dropdown from '../dropdown/Dropdown'
 
 import ThemeMenu from '../thememenu/ThemeMenu'
 
-import notifications from '../../assets/JsonData/notification.json'
+// import notifications from '../../assets/JsonData/notification.json'
 
 import user_image from '../../assets/images/tuan.jpg'
 
@@ -20,12 +20,12 @@ const curr_user = {
     image: user_image
 }
 
-const renderNotificationItem = (item, index) => (
-    <div className="notification-item" key={index}>
-        <i className={item.icon}></i>
-        <span>{item.content}</span>
-    </div>
-)
+// const renderNotificationItem = (item, index) => (
+//     <div className="notification-item" key={index}>
+//         <i className={item.icon}></i>
+//         <span>{item.content}</span>
+//     </div>
+// )
 
 const renderUserToggle = (user) => (
     <div className="topnav__right-user">

@@ -47,7 +47,6 @@ const Customers = () => {
 
   
 const userHander = async (id, action ) => {
-  console.log("user handle");
   setLoading(true);
   if(action === "ban"){
     const reason = prompt("Enter reason: ");
@@ -82,7 +81,7 @@ const renderBody = (item, index) => (
     <td>{item.name}</td>
     <td>{item.email}</td>
     <td>{item.role}</td>
-    <td><Badge type={badgeStatus[item.status]} content={item.status} /></td>
+    <td>{loading === true ? "loading..." :<Badge type={badgeStatus[item.status]} content={item.status} />}</td>
     <td>{renderAction(item._id, item.status)}</td>
     <td><div className='cursor_pointer' onClick={()=> deleteUser(item._id)} >
       <Badge type="danger" content="delete" /></div>
