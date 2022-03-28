@@ -11,28 +11,27 @@ const customerTableHead = [
   "name",
   "email",
   "role",
-  "location"
+  "status",
+  "action",
+  "delete"
 ];
 
 const renderHead = (item, index) => <th key={index}>{item}</th>;
 
-const renderBody = (item, index) => (
-  <tr key={index}>
-    <td>{++index}</td>
-    <td>{item.name}</td>
-    <td>{item.email}</td>
-    <td>{item.role === "tutor" ? <Badge type="success" content={item.role} />: <Badge type="primary" content={item.role} />}</td>
-    <td>{item.address ? (item.address) : <div>User Doesn't Provide Address</div>}</td>
-    <td></td>
-  </tr>
-);
+const badgeStatus = {
+  active: "success",
+  ban: "warning",
+  return: "primary",
+  banned: "danger",
+};
 
 const Customers = () => {
   const [listUser, setListUser] = useState();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     getTutor();
     return () => {
-      setListUser([]);
+      setLoading(false);
     };
   }, []);
 
@@ -45,6 +44,62 @@ const Customers = () => {
         .catch((err) => console.log(err));
     } catch (error) {}
   }
+
+  
+const userHander = async (id, action ) => {
+  console.log("user handle");
+  setLoading(true);
+  if(action === "ban"){
+    const reason = prompt("Enter reason: ");
+    if(reason){
+      const body = {
+        reason: reason
+      }
+      const res = await callAPI("POST", `user/${action}/${id}`, body)
+      alert(res.data)
+    }
+
+  }else {
+   const res = await callAPI("POST", `user/${action}/${id}`)
+    alert(res.data)
+  }
+  setLoading(false);
+  window.location.reload();
+}
+
+const deleteUser = async (id) => {
+  setLoading(true);
+  const res =await callAPI("DELETE", `user/${id}`)
+  setLoading(false);
+  alert(res.data)
+  window.location.reload();
+}
+
+
+const renderBody = (item, index) => (
+  <tr key={index}>
+    <td>{++index}</td>
+    <td>{item.name}</td>
+    <td>{item.email}</td>
+    <td>{item.role}</td>
+    <td><Badge type={badgeStatus[item.status]} content={item.status} /></td>
+    <td>{renderAction(item._id, item.status)}</td>
+    <td><div className='cursor_pointer' onClick={()=> deleteUser(item._id)} >
+      <Badge type="danger" content="delete" /></div>
+    </td>
+  </tr>
+);
+
+const renderAction = (id, status) =>{
+  if(status === "active")
+  return <div className='cursor_pointer' onClick={()=> userHander(id, "ban")} >
+      <Badge type={badgeStatus["ban"]} content="ban" />
+      </div>
+ if(status === "banned")
+      return <div className='cursor_pointer' onClick={()=> userHander(id, "active")} >
+          <Badge type={badgeStatus["return"]} content="return" />
+          </div>
+}
   return (
     <div>
       <h2 className="page-header">customers</h2>
@@ -54,7 +109,7 @@ const Customers = () => {
             <div className="card__body">
               {listUser && (
                 <Table
-                  limit={listUser.length}
+                  limit="10"
                   headData={customerTableHead}
                   renderHead={(item, index) => renderHead(item, index)}
                   bodyData={listUser}

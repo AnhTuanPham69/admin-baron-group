@@ -33,7 +33,7 @@ tbody > tr:hover {
   color: var(--txt-white);
 }
 
-.cursor_poniter {
+.cursor_pointer {
   cursor: pointer;
 }
 

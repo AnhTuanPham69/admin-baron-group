@@ -6,7 +6,9 @@ import './style.css'
 export default function ForgotPassword() {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => {
+    
+    console.log(data);}
   return (
     <div>
       <div className="body-login">

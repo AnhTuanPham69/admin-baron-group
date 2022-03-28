@@ -13,15 +13,18 @@ import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 
 import callAPI from "../api/api";
+
 import moment from "moment";
+
+import StarRatings from "react-star-ratings/build/star-ratings";
 
 const renderCusomerHead = (item, index) => <th key={index}>{item}</th>;
 
 const renderCusomerBody = (item, index) => (
   <tr key={index}>
     <td>{item.username}</td>
-    <td>{item.avgStar}</td>
     <td>{item.point}</td>
+    <td><StarRatings rating={item.avgStar} starSpacing="5px" starDimension="15px" starRatedColor="rgb(250, 217, 0)"/></td>
     <td>{item.votes}</td>
   </tr>
 );
@@ -92,15 +95,15 @@ const Dashboard = () => {
     <tr key={index}>
       <td>{item.name}</td>
       <td>{item.email}</td>
-      <td ><div className="cursor_poniter" onClick={() => openLink(item.cv)}>Link</div></td>
+      <td ><div className="cursor_pointer" onClick={() => openLink(item.cv)}>Link</div></td>
       <td>{moment(item.register_date).format("hh:mm DD/MM/YYYY")}</td>
       <td>
         <Badge type={orderStatus[item.status]} content={item.status} />
       </td>
       <td className="row">
-        <div className="cursor_poniter" onClick={()=> acceptTutor(item.uid, "accept")}><Badge type="success" content="accept"/></div>
+        <div className="cursor_pointer" onClick={()=> acceptTutor(item.uid, "accept")}><Badge type="success" content="accept"/></div>
       &ensp;
-      <div className="cursor_poniter" onClick={()=> acceptTutor(item.uid, "refuse")}><Badge type="danger" content="refuse"/></div>
+      <div className="cursor_pointer" onClick={()=> acceptTutor(item.uid, "refuse")}><Badge type="danger" content="refuse"/></div>
       </td>
     </tr>
   );
@@ -127,7 +130,7 @@ const Dashboard = () => {
   }
   // Customer Contribution
   const topCustomers = {
-    head: ["user", "star", "point", "total vote"],
+    head: ["user", "point", "star", "total vote"]
   };
 
   // Overview

@@ -64,13 +64,13 @@ const Topnav = () => {
                     />
                 </div>
                 <div className="topnav__right-item">
-                    <Dropdown
+                    {/* <Dropdown
                         icon='bx bx-bell'
                         badge='12'
                         contentData={notifications}
                         renderItems={(item, index) => renderNotificationItem(item, index)}
                         renderFooter={() => <NavLink to='/'>View All</NavLink>}
-                    />
+                    /> */}
                     {/* dropdown here */}
                 </div>
                 <div className="topnav__right-item">
