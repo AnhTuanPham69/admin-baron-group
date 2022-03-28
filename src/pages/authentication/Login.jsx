@@ -19,7 +19,6 @@ export default function Login() {
   const onSubmit = data => {
     setLoad(true);
     callAPI('post', '/admin', data).then((res)=>{
-      console.log(`status: ${res.status}`);
       setLoad(false);
       setStatus(res.status);
       sessionStorage.setItem('__token__', JSON.stringify(res.data.token));

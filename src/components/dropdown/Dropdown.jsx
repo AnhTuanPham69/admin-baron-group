@@ -1,12 +1,9 @@
 import React, {useRef} from 'react'
+import { useHistory } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 
 import './dropdown.css'
 
-const logout = () => {
-    sessionStorage.removeItem('__token__');
-    window.location.reload();
-}
 const clickOutsideRef = (content_ref, toggle_ref) => {
     document.addEventListener('mousedown', (e) => {
         // user click toggle
@@ -22,12 +19,18 @@ const clickOutsideRef = (content_ref, toggle_ref) => {
 }
 
 const Dropdown = props => {
+    const history = useHistory();
 
     const dropdown_toggle_el = useRef(null)
     const dropdown_content_el = useRef(null)
 
     clickOutsideRef(dropdown_content_el, dropdown_toggle_el)
-    
+
+    const logout = () => {
+        sessionStorage.removeItem('__token__');
+        history.push('/');
+        window.location.reload();
+    }
     return (
         <div className='dropdown'>
             <button ref={dropdown_toggle_el} className="dropdown__toggle">
