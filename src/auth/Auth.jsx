@@ -18,7 +18,7 @@ const Auth = () => {
         <Route path="/tutors" component={Layout} />
         <Route path="/settings" component={Layout} />
         <Route path="/forgot_password" component={ForgotPassword} />
-        <Route exact path="/">
+        <Route path="/">
           {loggedIn()
           ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
         </Route>
