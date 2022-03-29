@@ -83,7 +83,6 @@ const Dashboard = () => {
     await callAPI("POST", `tutor/${action}/${id}`)
     .then((res) => {
       setLoading(false)
-      console.log(res);
       alert(`You have ${action}ed this user to become a tutor`)
       window.location.reload();
     })

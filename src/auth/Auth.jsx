@@ -17,6 +17,7 @@ const Auth = () => {
         <Route path="/customers" component={Layout} />
         <Route path="/tutors" component={Layout} />
         <Route path="/settings" component={Layout} />
+        <Route path="/change_password" component={Layout} />
         <Route path="/forgot_password" component={ForgotPassword} />
         <Route path="/">
           {loggedIn()

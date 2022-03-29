@@ -15,8 +15,8 @@
         "icon": "bx bx-user-pin"
     },
     {
-        "display_name": "settings",
-        "route": "/settings",
+        "display_name": "Change Password",
+        "route": "/change_password",
         "icon": "bx bx-cog"
     }
     

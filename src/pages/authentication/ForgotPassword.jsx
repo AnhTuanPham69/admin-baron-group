@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
-import './style.css'
+import callAPI from "../../api/api";
+import "./style.css";
 
 export default function ForgotPassword() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [loading, setLoading] = useState();
+  const [status, setStatus] = useState();
+  const onSubmit = (data) => {
+    setLoading(true);
+    callAPI("post", "/admin/forgot_password", data)
+      .then((res) => {
 
-  const onSubmit = data => {
-    
-    console.log(data);}
+        if (res.status === 201) {
+          setTimeout(setStatus(res.status), 3000);
+          setStatus(res.status);
+          sessionStorage.setItem("__token__", JSON.stringify(res.data.token));
+        }else{
+          setStatus(res.data.status);
+        }
+        
+
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
   return (
     <div>
       <div className="body-login">
@@ -29,16 +52,42 @@ export default function ForgotPassword() {
                   placeholder="Enter email"
                   {...register("email", { required: true })}
                 />
-                {errors.email && <span className="text-danger">This field is required</span>}
+                {errors.email && (
+                  <span className="text-danger">This field is required</span>
+                )}
               </div>
               <div className="form-group" id="choice">
-              <div> <span className="text-danger"> Error: Sai email</span></div>
-                <NavLink to="/login" >Back to login?</NavLink>
+                {status === 403 && (
+                  <div>
+                    {" "}
+                    <span className="text-danger"> Error: Email wrong!</span>
+                  </div>
+                )}
+              {status === 201 && (
+                  <div>
+                    {" "}
+                    <span className="text-primary">
+                      {" "}
+                      Check email to get new password
+                    </span>
+                  </div>
+                )}
+                <NavLink to="/login">Back to login?</NavLink>
               </div>
               
-              <button type="submit" className="btn btn-login btn-lg btn-block" >
-                Get a new password
-              </button>
+
+              {loading === true ? (
+                <button className="btn btn-login btn-lg btn-block">
+                  Loading...
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="btn btn-login btn-lg btn-block"
+                >
+                  Get a new password
+                </button>
+              )}
             </form>
           </div>
         </div>
@@ -46,5 +95,3 @@ export default function ForgotPassword() {
     </div>
   );
 }
-
-
