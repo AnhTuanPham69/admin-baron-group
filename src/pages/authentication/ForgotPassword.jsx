@@ -18,7 +18,6 @@ export default function ForgotPassword() {
       .then((res) => {
 
         if (res.status === 201) {
-          setTimeout(setStatus(res.status), 3000);
           setStatus(res.status);
           sessionStorage.setItem("__token__", JSON.stringify(res.data.token));
         }else{
