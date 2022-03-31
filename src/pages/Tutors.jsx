@@ -43,7 +43,7 @@ const Tutors = () => {
 
   async function getTutor() {
     try {
-      await callAPI("get", "/tutor")
+      await callAPI("get", "/tutor/alltutor")
         .then((res) => {
           setListTutor(res?.data.listTutor);
         })
@@ -167,15 +167,6 @@ const Tutors = () => {
       .catch((err) => console.log(err));
   };
 
-  //   const acceptTutor = async (id, action) => {
-  //     await callAPI("POST", `tutor/${action}/${id}`)
-  //       .then((res) => {
-  //         alert(`You have ${action}ed this user to become a tutor`);
-  //         window.location.reload();
-  //       })
-  //       .catch((err) => console.log(err));
-  //   };
-  ///Render
   return (
     <div>
       <div className="col-12">
